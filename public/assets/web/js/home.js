@@ -23,7 +23,7 @@
         };
 
         let distance = Math.round(getDistance({lat:userLat, lng:userLng}, {lat:pharmLat, lng:pharmLng}));
-        if (distance > 3000000){
+        if (distance > 500){
             $(this).remove()
         } else {
             $($(this).data('distance')).html(distance + ' M away')

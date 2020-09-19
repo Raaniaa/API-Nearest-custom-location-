@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Pharmacy;
+use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

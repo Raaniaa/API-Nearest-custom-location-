@@ -17,15 +17,22 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['namespace' => 'Api'], function () {
+
+});
 Route::post('/register', 'App\Http\Controllers\Api\AuthController@register');
 Route::post('/login', 'App\Http\Controllers\Api\AuthController@login');
-Route::apiResource('/pharmacies', 'App\Http\Controllers\Api\HomeControllerapi');
+
+// PHARMACIES ROUTES
+Route::apiResource('/pharmacies', 'App\Http\Controllers\Api\HomeControllerApi');
+
 Route::get('details', function () {
 
 	$ip = '1';
     $data = \Location::get($ip);
     dd($data->countryName);
-   
+
 });
 Route::get('get-location-from-ip',function(){
     $ip= \Request::ip();

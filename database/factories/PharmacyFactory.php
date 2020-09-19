@@ -1,18 +1,36 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Pharmacy;
-use Faker\Generator as Faker;
+use App\Models\Pharmacy;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
-$factory->define(Pharmacy::class, function (Faker $faker) {
-    return [
-        // rania location 30.1338824,31.2682503
-        // 30.1338824,31.2682503
-        'name' => $faker->sentence,
-        'phone' => $faker->e164PhoneNumber,
-        'address' => $faker->address,
-        'lat' => $faker->randomFloat(7, 30.1338824, 31.2682503), // 30.778054,30.782433
-        'lng' => $faker->randomFloat(7, 30.1338824, 31.2682503), //30.989893,30.988500
-    ];
-});
+class PharmacyFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Pharmacy::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            // rania location 30.1338824,31.2682503
+            // 30.1338824,31.2682503
+            'name' => $this->faker->sentence,
+            'phone' => $this->faker->e164PhoneNumber,
+            'address' => $this->faker->address,
+            'lat' => $this->faker->randomFloat(7, 30.1338824, 31.2682503), // 30.778054,30.782433
+            'lng' => $this->faker->randomFloat(7, 30.1338824, 31.2682503), //30.989893,30.988500
+        ];
+
+    }
+}
