@@ -3,18 +3,18 @@
 
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
-use App\Models\Pharmacy;
+use App\Models\Specialty;
+use App\Models\Doctor;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\PharmacyResource;
-class HomeControllerApi extends Controller
+class SpecialtyControllerApi extends Controller
 {
     public function index(Request $request)
     {
-        $pharmacies = $this->getNearby($request);
+        $specialties = $this->getNearby($request);
         return response([
-            'pharmacies' => $pharmacies ,
+            'specialties' => $specialties ,
             'message' => 'Retrieved successfully'], 200);
     }
 
@@ -30,13 +30,13 @@ class HomeControllerApi extends Controller
         $longitudeTo = $request->longitude;
         $earthRadius = 6378137; // earth radius it's fixed value 6378137
 
-        $nearbyPharmacies = [];
+        $nearbySpecialties = [];
 
-        $pharmacies = Pharmacy::where('name', 'LIKE', "%$request->name%")->get();
+        $specialties = Specialty::where('specialtyName', 'LIKE', "%$request->name%")->get();
 
-        foreach ($pharmacies as $pharmacy) {
-            $latitudeFrom = $pharmacy->latitude;
-            $longitudeFrom = $pharmacy->longitude;
+        foreach ($specialties as $specialty) {
+            $latitudeFrom = $specialty->lat;
+            $longitudeFrom = $specialty->lng;
 
             // convert from degrees to radians
             $latFrom = deg2rad($latitudeFrom);
@@ -51,16 +51,16 @@ class HomeControllerApi extends Controller
                     cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
             $distance = round($angle * $earthRadius);
 //            $distance = $distance >= 1000 ? (round($distance/1000, 2)) : $distance;
-            $pharmacy->distance = $distance;
+            $specialty->distance = $distance;
 
             if ($distance > 500){
                 continue;
             }
-            array_push($nearbyPharmacies, $pharmacy);
+            array_push($nearbySpecialties, $specialty);
         }
 
-        if (count($nearbyPharmacies)) {
-            return $nearbyPharmacies;
+        if (count($nearbySpecialties)) {
+            return $nearbySpecialties;
         }
     }
 
@@ -70,26 +70,22 @@ class HomeControllerApi extends Controller
     public function store(Request $request){
         $data = $request->all();
         $validator = Validator::make($data, [
-            'name' => 'required|max:255',
-            'latitude' => 'required|max:255',
-            'longitude' => 'required|max:255',
-            'phone' => 'required',
-            'address'=>'required',
+            'specialtyName' => 'required|max:255',
         ]);
         if($validator->fails()){
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
        
-        $pharmacies = Pharmacy::create($data);
+        $specialties = Specialty::create($data);
         return response([
-            'pharmacies' => new PharmacyResource($pharmacies),
+            'specialties' => $specialties,
             'message' => 'Created successfully'], 200);
     }
 
     public function show(Request $request){
-        $name_search = Pharmacy::where('name','like','%' . $request->name . '%')->get();
+        $name_search = Doctor::where('specialtyName','like','%' . $request->name . '%')->get();
         return response()->json([
-            'data'  => $name_search,
+            'specialty'  => $name_search,
             'status'=> true
         ]);
     }

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Pharmacy;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,9 +16,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        $this->call(UserSeeder::class);
+       // $this->call(UserSeeder::class);
 
-        Pharmacy::factory(30)->create();
+       //Specialty::factory(30)->create();
+      // $this->call(Specialtyy::class);
+       $this->call(PharamacySeeder::class);
 
 
     }

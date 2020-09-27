@@ -10,6 +10,6 @@ class Pharmacy extends Model
 {
     use HasApiTokens;
     use HasFactory;
-    protected $fillable = ['name', 'phone', 'photo', 'address', 'lat', 'lng'];
+    protected $fillable = ['name', 'phone', 'photo', 'address', 'latitude', 'longitude'];
 
 }

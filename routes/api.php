@@ -26,16 +26,13 @@ Route::post('/login', 'App\Http\Controllers\Api\AuthController@login');
 
 // PHARMACIES ROUTES
 Route::apiResource('/pharmacies', 'App\Http\Controllers\Api\HomeControllerApi');
+Route::get('/pharmacies/search', 'App\Http\Controllers\Api\HomeControllerApi@show');
 
-Route::get('details', function () {
-
-	$ip = '1';
-    $data = \Location::get($ip);
-    dd($data->countryName);
-
-});
-Route::get('get-location-from-ip',function(){
-    $ip= \Request::ip();
-    $data = \Location::get($ip);
-    dd($data);
-});
+//Doctor
+Route::post('/doctor', 'App\Http\Controllers\Api\DoctorControllerApi@store');
+Route::get('/doctor/search', 'App\Http\Controllers\Api\DoctorControllerApi@show');
+Route::get('/doctor', 'App\Http\Controllers\Api\DoctorControllerApi@index');
+//Specialty
+Route::post('/specialty', 'App\Http\Controllers\Api\SpecialtyControllerApi@store');
+Route::get('/specialty/search', 'App\Http\Controllers\Api\SpecialtyControllerApi@show');
+Route::get('/specialty', 'App\Http\Controllers\Api\SpecialtyControllerApi@index');

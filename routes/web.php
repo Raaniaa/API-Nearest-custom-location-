@@ -18,3 +18,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
+Route::get('/doctor',function(){
+    $doc = \App\Models\Doctor::with('specialty')->find(1);
+    return $doc->specialty->specialtyName;
+});
