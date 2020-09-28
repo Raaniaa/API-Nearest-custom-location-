@@ -9,7 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\PharmacyResource;
 class HomeControllerApi extends Controller
-{
+{  public function getAllPharmacy(){
+    $Pharmacies = Pharmacy::get();
+    return response()->json([
+            'data'  => $Pharmacies,
+        ]);
+}
     public function index(Request $request)
     {
         $pharmacies = $this->getNearby($request);

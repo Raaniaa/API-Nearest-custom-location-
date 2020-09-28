@@ -19,8 +19,6 @@ class PharamacySeeder extends Seeder
         'address'=>'Shoubra','latitude'=>'30.122752','longitude'=>'31.261460'],
         ['id' => 4, 'name' => 'Pharmacy khater','phone'=>'4455666',
         'address'=>'Shoubra','latitude'=>'30.122880','longitude'=>'31.260833'],
-    
-    
     ];
     foreach($pharmacies as $pharmacy){
         Pharmacy::create($pharmacy);

@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 class DoctorControllerApi extends Controller
 {
+    public function getAllDoctor(){
+        $doctors = Doctor::get();
+        return response()->json([
+                'data'  => $doctors,
+            ]);
+    }
     public function index(Request $request)
     {
         $doctors = $this->getNearby($request);
@@ -36,8 +42,8 @@ class DoctorControllerApi extends Controller
         $doctors = Doctor::where('specialtyName', 'LIKE', "%$request->name%")->get();
 
         foreach ($doctors as $doctor) {
-            $latitudeFrom = $doctor->lat;
-            $longitudeFrom = $doctor->lng;
+            $latitudeFrom = $doctor->latitude;
+            $longitudeFrom = $doctor->longitude;
 
             // convert from degrees to radians
             $latFrom = deg2rad($latitudeFrom);

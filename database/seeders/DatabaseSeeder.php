@@ -19,9 +19,13 @@ class DatabaseSeeder extends Seeder
        // $this->call(UserSeeder::class);
 
        //Specialty::factory(30)->create();
-      // $this->call(Specialtyy::class);
+      $this->call(Specialtyy::class);
        $this->call(PharamacySeeder::class);
+       $this->call(DoctorSeeder::class);
 
+
+
+       
 
     }
 }

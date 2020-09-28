@@ -9,7 +9,13 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 class SpecialtyControllerApi extends Controller
-{
+{ 
+     public function getAllSpecialty(){
+    $specialties = Specialty::get();
+    return response()->json([
+            'data'  => $specialties,
+        ]);
+}
     public function index(Request $request)
     {
         $specialties = $this->getNearby($request);
@@ -35,8 +41,8 @@ class SpecialtyControllerApi extends Controller
         $specialties = Specialty::where('specialtyName', 'LIKE', "%$request->name%")->get();
 
         foreach ($specialties as $specialty) {
-            $latitudeFrom = $specialty->lat;
-            $longitudeFrom = $specialty->lng;
+            $latitudeFrom = $specialty->latitude;
+            $longitudeFrom = $specialty->longitude;
 
             // convert from degrees to radians
             $latFrom = deg2rad($latitudeFrom);
