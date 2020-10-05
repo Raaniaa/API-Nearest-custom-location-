@@ -3,24 +3,23 @@
 
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
-use App\Models\Specialty;
-use App\Models\Doctor;
+use App\Models\Xray;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-class SpecialtyControllerApi extends Controller
-{ 
-     public function getAllSpecialty(){
-    $specialties = Specialty::get();
-    return response()->json([
-            'data'  => $specialties,
-        ]);
-}
+class XrayControllerApi extends Controller
+{
+    public function getAllXray(){
+        $xrays = Xray::get();
+        return response()->json([
+                'data'  => $xrays,
+            ]);
+    }
     public function index(Request $request)
     {
-        $specialties = $this->getNearby($request);
+        $xrays = $this->getNearby($request);
         return response([
-            'specialties' => $specialties ,
+            'xrays' => $xrays ,
             'message' => 'Retrieved successfully'], 200);
     }
 
@@ -36,13 +35,13 @@ class SpecialtyControllerApi extends Controller
         $longitudeTo = $request->longitude;
         $earthRadius = 6378137; // earth radius it's fixed value 6378137
 
-        $nearbySpecialties = [];
+        $nearbyXrays = [];
 
-        $specialties = Doctor::where('specialtyName', 'LIKE', "%$request->name%")->get();
-        
-        foreach ($specialties as $specialty) {
-            $latitudeFrom = $specialty->latitude;
-            $longitudeFrom = $specialty->longitude;
+        $xrays = Xray::where('XrayName', 'LIKE', "%$request->name%")->get();
+
+        foreach ($xrays as $xray) {
+            $latitudeFrom = $xray->latitude;
+            $longitudeFrom = $xray->longitude;
 
             // convert from degrees to radians
             $latFrom = deg2rad($latitudeFrom);
@@ -57,42 +56,46 @@ class SpecialtyControllerApi extends Controller
                     cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
             $distance = round($angle * $earthRadius);
 //            $distance = $distance >= 1000 ? (round($distance/1000, 2)) : $distance;
-            $specialty->distance = $distance;
+            $xray->distance = $distance;
 
             if ($distance > 500){
                 continue;
             }
-            array_push($nearbySpecialties, $specialty);
+            array_push($nearbyXrays, $xray);
         }
 
-        if (count($nearbySpecialties)) {
-            return $nearbySpecialties;
+        if (count($nearbyXrays)) {
+            return $nearbyXrays;
         }
     }
-
-    
-
 
     public function store(Request $request){
         $data = $request->all();
         $validator = Validator::make($data, [
-            'specialtyName' => 'required|max:255',
+            'XrayName' => 'required|max:255',
+            'latitude' => 'required|max:255',
+            'longitude' => 'required|max:255',
+            'address'=>'required',
+            'phone'=>'required',
         ]);
         if($validator->fails()){
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
-       
-        $specialties = Specialty::create($data);
+        
+        $xrays = Xray::create($data);
+    
         return response([
-            'specialties' => $specialties,
+            'xrays' => $xrays,
             'message' => 'Created successfully'], 200);
     }
-
+    
     public function show(Request $request){
-        $name_search = Doctor::where('specialtyName','like','%' . $request->name . '%')->get();
+        $name_search = Xray::where('XrayName','like','%' . $request->name . '%')->get();
         return response()->json([
-            'specialty'  => $name_search,
+            'data'  => $name_search,
             'status'=> true
         ]);
     }
+    
+
 }

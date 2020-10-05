@@ -3,24 +3,23 @@
 
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
-use App\Models\Specialty;
-use App\Models\Doctor;
+use App\Models\Labs;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-class SpecialtyControllerApi extends Controller
-{ 
-     public function getAllSpecialty(){
-    $specialties = Specialty::get();
-    return response()->json([
-            'data'  => $specialties,
-        ]);
-}
+class LabControllerApi extends Controller
+{
+    public function getAllLab(){
+        $labs = Labs::get();
+        return response()->json([
+                'data'  => $labs,
+            ]);
+    }
     public function index(Request $request)
     {
-        $specialties = $this->getNearby($request);
+        $labs = $this->getNearby($request);
         return response([
-            'specialties' => $specialties ,
+            'labs' => $labs ,
             'message' => 'Retrieved successfully'], 200);
     }
 
@@ -36,13 +35,13 @@ class SpecialtyControllerApi extends Controller
         $longitudeTo = $request->longitude;
         $earthRadius = 6378137; // earth radius it's fixed value 6378137
 
-        $nearbySpecialties = [];
+        $nearbyLabs = [];
 
-        $specialties = Doctor::where('specialtyName', 'LIKE', "%$request->name%")->get();
-        
-        foreach ($specialties as $specialty) {
-            $latitudeFrom = $specialty->latitude;
-            $longitudeFrom = $specialty->longitude;
+        $labs = Labs::where('LabName', 'LIKE', "%$request->name%")->get();
+
+        foreach ($labs as $lab) {
+            $latitudeFrom = $lab->latitude;
+            $longitudeFrom = $lab->longitude;
 
             // convert from degrees to radians
             $latFrom = deg2rad($latitudeFrom);
@@ -57,42 +56,46 @@ class SpecialtyControllerApi extends Controller
                     cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
             $distance = round($angle * $earthRadius);
 //            $distance = $distance >= 1000 ? (round($distance/1000, 2)) : $distance;
-            $specialty->distance = $distance;
+            $lab->distance = $distance;
 
             if ($distance > 500){
                 continue;
             }
-            array_push($nearbySpecialties, $specialty);
+            array_push($nearbyLabs, $lab);
         }
 
-        if (count($nearbySpecialties)) {
-            return $nearbySpecialties;
+        if (count($nearbyLabs)) {
+            return $nearbyLabs;
         }
     }
-
-    
-
 
     public function store(Request $request){
         $data = $request->all();
         $validator = Validator::make($data, [
-            'specialtyName' => 'required|max:255',
+            'LabName' => 'required|max:255',
+            'latitude' => 'required|max:255',
+            'longitude' => 'required|max:255',
+            'address'=>'required',
+            'phone'=>'required',
         ]);
         if($validator->fails()){
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
-       
-        $specialties = Specialty::create($data);
+        
+        $labs = Labs::create($data);
+    
         return response([
-            'specialties' => $specialties,
+            'labs' => $labs,
             'message' => 'Created successfully'], 200);
     }
-
+    
     public function show(Request $request){
-        $name_search = Doctor::where('specialtyName','like','%' . $request->name . '%')->get();
+        $name_search = Labs::where('LabName','like','%' . $request->name . '%')->get();
         return response()->json([
-            'specialty'  => $name_search,
+            'data'  => $name_search,
             'status'=> true
         ]);
     }
+    
+
 }
