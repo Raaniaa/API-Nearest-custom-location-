@@ -49,3 +49,9 @@ Route::post('/xray', 'App\Http\Controllers\Api\XrayControllerApi@store');
 Route::get('/xrays', 'App\Http\Controllers\Api\XrayControllerApi@getAllXray');
 Route::get('/xray/search', 'App\Http\Controllers\Api\XrayControllerApi@show');
 Route::get('/xray', 'App\Http\Controllers\Api\XrayControllerApi@index');
+
+//Nurse
+Route::post('/nurse', 'App\Http\Controllers\Api\NurseControllerApi@store');
+Route::get('/nurses', 'App\Http\Controllers\Api\NurseControllerApi@getAllXnurse');
+Route::get('/nurse/search', 'App\Http\Controllers\Api\NurseControllerApi@show');
+Route::get('/nurse', 'App\Http\Controllers\Api\NurseControllerApi@index');
