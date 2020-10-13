@@ -55,3 +55,6 @@ Route::post('/nurse', 'App\Http\Controllers\Api\NurseControllerApi@store');
 Route::get('/nurses', 'App\Http\Controllers\Api\NurseControllerApi@getAllXnurse');
 Route::get('/nurse/search', 'App\Http\Controllers\Api\NurseControllerApi@show');
 Route::get('/nurse', 'App\Http\Controllers\Api\NurseControllerApi@index');
+
+//get banner image
+Route::get('/banner', 'App\Http\Controllers\Api\BannerControllerApi@getBanner');
