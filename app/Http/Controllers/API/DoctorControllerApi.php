@@ -20,7 +20,7 @@ class DoctorControllerApi extends Controller
     {
         $doctors = $this->getNearby($request);
         return response([
-            'doctors' => $doctors ,
+            'data' => $doctors ,
             'message' => 'Retrieved successfully'], 200);
     }
 
@@ -39,7 +39,7 @@ class DoctorControllerApi extends Controller
 
         $nearbyDoctors = [];
 
-        $doctors = Doctor::where('specialtyName', 'LIKE', "%$request->name%")->get();
+        $doctors = Doctor::where('name', 'LIKE', "%$request->name%")->get();
 
         foreach ($doctors as $doctor) {
             $latitudeFrom = $doctor->latitude;
@@ -74,10 +74,11 @@ class DoctorControllerApi extends Controller
     public function store(Request $request){
         $data = $request->all();
         $validator = Validator::make($data, [
-            'DoctorName' => 'required|max:255',
+            'name' => 'required|max:255',
             'latitude' => 'required|max:255',
             'longitude' => 'required|max:255',
             'address'=>'required',
+            'phone'=>'required',
             'specialtyName'=>'required',
         ]);
         if($validator->fails()){
@@ -87,12 +88,12 @@ class DoctorControllerApi extends Controller
         $doctors = Doctor::create($data);
     
         return response([
-            'doctors' => $doctors,
+            'data' => $doctors,
             'message' => 'Created successfully'], 200);
     }
     
     public function show(Request $request){
-        $name_search = Doctor::where('DoctorName','like','%' . $request->name . '%')->get();
+        $name_search = Doctor::where('name','like','%' . $request->name . '%')->get();
         return response()->json([
             'data'  => $name_search,
             'status'=> true

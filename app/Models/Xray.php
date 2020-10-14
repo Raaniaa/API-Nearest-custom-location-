@@ -8,5 +8,5 @@ class Xray extends Model
 {use HasApiTokens;
     use HasFactory;
     protected $fillable = ['XrayName','address', 'latitude', 'longitude','phone'];
-
+    protected $hidden = ['created_at','updated_at'];
 }

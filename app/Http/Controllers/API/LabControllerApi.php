@@ -19,7 +19,7 @@ class LabControllerApi extends Controller
     {
         $labs = $this->getNearby($request);
         return response([
-            'labs' => $labs ,
+            'data' => $labs ,
             'message' => 'Retrieved successfully'], 200);
     }
 
@@ -37,7 +37,7 @@ class LabControllerApi extends Controller
 
         $nearbyLabs = [];
 
-        $labs = Labs::where('LabName', 'LIKE', "%$request->name%")->get();
+        $labs = Labs::where('name', 'LIKE', "%$request->name%")->get();
 
         foreach ($labs as $lab) {
             $latitudeFrom = $lab->latitude;
@@ -72,7 +72,7 @@ class LabControllerApi extends Controller
     public function store(Request $request){
         $data = $request->all();
         $validator = Validator::make($data, [
-            'LabName' => 'required|max:255',
+            'name' => 'required|max:255',
             'latitude' => 'required|max:255',
             'longitude' => 'required|max:255',
             'address'=>'required',
@@ -85,12 +85,12 @@ class LabControllerApi extends Controller
         $labs = Labs::create($data);
     
         return response([
-            'labs' => $labs,
+            'data' => $labs,
             'message' => 'Created successfully'], 200);
     }
     
     public function show(Request $request){
-        $name_search = Labs::where('LabName','like','%' . $request->name . '%')->get();
+        $name_search = Labs::where('name','like','%' . $request->name . '%')->get();
         return response()->json([
             'data'  => $name_search,
             'status'=> true

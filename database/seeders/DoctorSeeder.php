@@ -14,14 +14,14 @@ class DoctorSeeder extends Seeder
     public function run()
     {
           $doctors = [
-            ['id' => 1, 'DoctorName' => 'Ahmed Ali','address'=>'Shoubra','latitude'=>'30.123556',
-            'longitude'=>'31.260940','specialtyName'=>'Audiologist'],
-            ['id' => 2, 'DoctorName' => 'Mona Mokhtar','address'=>'Shoubra','latitude'=>'30.123027','longitude'=>'31.261123','specialtyName'=>'Audiologist'],
-            ['id' => 3, 'DoctorName' => 'Amira Naseh','address'=>'Shoubra',
+            ['id' => 1, 'name' => 'Ahmed Ali','address'=>'Shoubra','latitude'=>'30.123556',
+            'longitude'=>'31.260940','specialtyName'=>'Audiologist','phone'=>'45455'],
+            ['id' => 2, 'phone'=>'45455','name' => 'Mona Mokhtar','address'=>'Shoubra','latitude'=>'30.123027','longitude'=>'31.261123','specialtyName'=>'Audiologist'],
+            ['id' => 3,'phone'=>'45455', 'name' => 'Amira Naseh','address'=>'Shoubra',
             'latitude'=>'30.122507','longitude'=>'31.262571','specialtyName'=>'Anesthesiologist'],
-            ['id' => 4, 'DoctorName' => 'Abo Elala','address'=>'Shoubra',
+            ['id' => 4,'phone'=>'45455', 'name' => 'Abo Elala','address'=>'Shoubra',
             'latitude'=>'30.122767','longitude'=>'31.261198','specialtyName'=>'Andrologists'],
-            ['id' => 5, 'DoctorName' => 'hamdi ali','address'=>'Shoubra',
+            ['id' => 5,'phone'=>'45455', 'name' => 'hamdi ali','address'=>'Shoubra',
             'latitude'=>'30.122814','longitude'=>' 31.260661','specialtyName'=>'Andrologists'],
     
     ];

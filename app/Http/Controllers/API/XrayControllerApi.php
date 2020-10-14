@@ -19,7 +19,7 @@ class XrayControllerApi extends Controller
     {
         $xrays = $this->getNearby($request);
         return response([
-            'xrays' => $xrays ,
+            'data' => $xrays ,
             'message' => 'Retrieved successfully'], 200);
     }
 
@@ -37,7 +37,7 @@ class XrayControllerApi extends Controller
 
         $nearbyXrays = [];
 
-        $xrays = Xray::where('XrayName', 'LIKE', "%$request->name%")->get();
+        $xrays = Xray::where('name', 'LIKE', "%$request->name%")->get();
 
         foreach ($xrays as $xray) {
             $latitudeFrom = $xray->latitude;
@@ -72,7 +72,7 @@ class XrayControllerApi extends Controller
     public function store(Request $request){
         $data = $request->all();
         $validator = Validator::make($data, [
-            'XrayName' => 'required|max:255',
+            'name' => 'required|max:255',
             'latitude' => 'required|max:255',
             'longitude' => 'required|max:255',
             'address'=>'required',
@@ -85,12 +85,12 @@ class XrayControllerApi extends Controller
         $xrays = Xray::create($data);
     
         return response([
-            'xrays' => $xrays,
+            'data' => $xrays,
             'message' => 'Created successfully'], 200);
     }
     
     public function show(Request $request){
-        $name_search = Xray::where('XrayName','like','%' . $request->name . '%')->get();
+        $name_search = Xray::where('name','like','%' . $request->name . '%')->get();
         return response()->json([
             'data'  => $name_search,
             'status'=> true

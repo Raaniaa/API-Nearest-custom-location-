@@ -19,7 +19,7 @@ class HomeControllerApi extends Controller
     {
         $pharmacies = $this->getNearby($request);
         return response([
-            'pharmacies' => $pharmacies ,
+            'data' => $pharmacies ,
             'message' => 'Retrieved successfully'], 200);
     }
 
@@ -87,7 +87,7 @@ class HomeControllerApi extends Controller
        
         $pharmacies = Pharmacy::create($data);
         return response([
-            'pharmacies' => new PharmacyResource($pharmacies),
+            'data' => new PharmacyResource($pharmacies),
             'message' => 'Created successfully'], 200);
     }
 

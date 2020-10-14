@@ -20,7 +20,7 @@ class SpecialtyControllerApi extends Controller
     {
         $specialties = $this->getNearby($request);
         return response([
-            'specialties' => $specialties ,
+            'data' => $specialties ,
             'message' => 'Retrieved successfully'], 200);
     }
 
@@ -84,14 +84,14 @@ class SpecialtyControllerApi extends Controller
        
         $specialties = Specialty::create($data);
         return response([
-            'specialties' => $specialties,
+            'data' => $specialties,
             'message' => 'Created successfully'], 200);
     }
 
     public function show(Request $request){
         $name_search = Doctor::where('specialtyName','like','%' . $request->name . '%')->get();
         return response()->json([
-            'specialty'  => $name_search,
+            'data'  => $name_search,
             'status'=> true
         ]);
     }

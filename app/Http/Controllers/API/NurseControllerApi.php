@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 class NurseControllerApi extends Controller
 {
-    public function getAllNurse(){
+    public function getAllXnurse(){
         $nurses = Nurse::get();
         return response()->json([
                 'data'  => $nurses,
@@ -19,7 +19,7 @@ class NurseControllerApi extends Controller
     {
         $nurses = $this->getNearby($request);
         return response([
-            'nurses' => $nurses ,
+            'data' => $nurses ,
             'message' => 'Retrieved successfully'], 200);
     }
 
@@ -37,7 +37,7 @@ class NurseControllerApi extends Controller
 
         $nearbyNurses = [];
 
-        $nurses = Nurse::where('NurseName', 'LIKE', "%$request->name%")->get();
+        $nurses = Nurse::where('name', 'LIKE', "%$request->name%")->get();
 
         foreach ($nurses as $nurse) {
             $latitudeFrom = $nurse->latitude;
@@ -72,7 +72,7 @@ class NurseControllerApi extends Controller
     public function store(Request $request){
         $data = $request->all();
         $validator = Validator::make($data, [
-            'NurseName' => 'required|max:255',
+            'name' => 'required|max:255',
             'latitude' => 'required|max:255',
             'longitude' => 'required|max:255',
             'address'=>'required',
@@ -87,12 +87,12 @@ class NurseControllerApi extends Controller
         $nurses = Nurse::create($data);
     
         return response([
-            'nurses' => $nurses,
+            'data' => $nurses,
             'message' => 'Created successfully'], 200);
     }
     
     public function show(Request $request){
-        $name_search = Nurse::where('NurseName','like','%' . $request->name . '%')->get();
+        $name_search = Nurse::where('name','like','%' . $request->name . '%')->get();
         return response()->json([
             'data'  => $name_search,
             'status'=> true

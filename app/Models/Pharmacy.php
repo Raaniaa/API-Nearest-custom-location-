@@ -11,5 +11,6 @@ class Pharmacy extends Model
     use HasApiTokens;
     use HasFactory;
     protected $fillable = ['name', 'phone', 'photo', 'address', 'latitude', 'longitude'];
+    protected $hidden = ['created_at','updated_at'];
 
 }

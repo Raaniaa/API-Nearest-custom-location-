@@ -15,7 +15,7 @@ class CreateNursesTable extends Migration
     {
         Schema::create('nurses', function (Blueprint $table) {
             $table->id();
-            $table->string('NurseName', 100);
+            $table->string('name', 100);
             $table->string('address', 300);
             $table->string('latitude');
             $table->string('longitude');

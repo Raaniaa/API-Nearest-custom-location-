@@ -9,5 +9,6 @@ class Nurse extends Model
 {
     use HasFactory;
     use HasApiTokens; 
-    protected $fillable = ['NurseName','address', 'latitude', 'longitude','phone','gender','photo'];
+    protected $fillable = ['name','address', 'latitude', 'longitude','phone','gender','photo'];
+    protected $hidden = ['created_at','updated_at'];
 }
