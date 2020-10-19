@@ -21,6 +21,7 @@ class CreateDoctorsTable extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->string('specialtyName');
+            $table->string('photo')->nullable();
             $table->foreign('specialtyName')->references('specialtyName')->on('specialties')->onDelete('cascade');
             $table->timestamps();
         });

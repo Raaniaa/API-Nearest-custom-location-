@@ -8,6 +8,6 @@ use Laravel\Sanctum\HasApiTokens;
 class Labs extends Model
 {   use HasApiTokens;  
     use HasFactory;
-    protected $fillable = ['name','address', 'latitude', 'longitude','phone'];
+    protected $fillable = ['name','address', 'latitude','photo', 'longitude','phone'];
     protected $hidden = ['created_at','updated_at'];
 }

@@ -20,6 +20,7 @@ class CreateLabsTable extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->string('phone');
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }

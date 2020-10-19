@@ -77,6 +77,7 @@ class XrayControllerApi extends Controller
             'longitude' => 'required|max:255',
             'address'=>'required',
             'phone'=>'required',
+            'photo'=> '',
         ]);
         if($validator->fails()){
             return response(['error' => $validator->errors(), 'Validation Error']);

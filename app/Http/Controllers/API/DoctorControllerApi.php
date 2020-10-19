@@ -80,6 +80,7 @@ class DoctorControllerApi extends Controller
             'address'=>'required',
             'phone'=>'required',
             'specialtyName'=>'required',
+            'photo'=> '',
         ]);
         if($validator->fails()){
             return response(['error' => $validator->errors(), 'Validation Error']);

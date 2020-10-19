@@ -9,7 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Doctor extends Model
 {    use HasApiTokens;
     use HasFactory;
-    protected $fillable = ['name','address', 'latitude', 'longitude','specialtyName','phone'];
+    protected $fillable = ['name','address', 'latitude', 'photo','longitude','specialtyName','phone'];
     protected $hidden = ['created_at','updated_at'];
     public function specialty(){
         return $this->belongsTo('App\Models\Specialty','specialtyName');
