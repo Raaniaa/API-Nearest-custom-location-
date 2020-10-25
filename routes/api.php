@@ -33,6 +33,8 @@ Route::post('/doctor', 'App\Http\Controllers\Api\DoctorControllerApi@store');
 Route::get('/doctors', 'App\Http\Controllers\Api\DoctorControllerApi@getAllDoctor');
 Route::get('/doctor/search', 'App\Http\Controllers\Api\DoctorControllerApi@show');
 Route::get('/doctor', 'App\Http\Controllers\Api\DoctorControllerApi@index');
+Route::get('/doctor/{latitude}/{longitude}', 'App\Http\Controllers\Api\DoctorControllerApi@deleteDoctor');
+Route::post('/doc/{latitude}/{longitude}', 'App\Http\Controllers\Api\DoctorControllerApi@updateDoctor');
 //Specialty
 Route::post('/specialty', 'App\Http\Controllers\Api\SpecialtyControllerApi@store');
 Route::get('/specialties', 'App\Http\Controllers\Api\SpecialtyControllerApi@getAllSpecialty');

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\PharmacyResource;
 class HomeControllerApi extends Controller
 {  public function getAllPharmacy(){
-    $Pharmacies = Pharmacy::get();
+    $Pharmacies = Pharmacy::paginate(10);
     return response()->json([
             'data'  => $Pharmacies,
         ]);
@@ -37,7 +37,7 @@ class HomeControllerApi extends Controller
 
         $nearbyPharmacies = [];
 
-        $pharmacies = Pharmacy::where('name', 'LIKE', "%$request->name%")->get();
+        $pharmacies = Pharmacy::where('name', 'LIKE', $request->name.'%')->paginate(20);
 
         foreach ($pharmacies as $pharmacy) {
             $latitudeFrom = $pharmacy->latitude;
@@ -92,7 +92,7 @@ class HomeControllerApi extends Controller
     }
 
     public function show(Request $request){
-        $name_search = Pharmacy::where('name','like','%' . $request->name . '%')->get();
+        $name_search = Pharmacy::where('name','like','%' . $request->name . '%')->paginate(20);
         return response()->json([
             'data'  => $name_search,
             'status'=> true

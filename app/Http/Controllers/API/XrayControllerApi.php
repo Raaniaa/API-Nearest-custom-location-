@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class XrayControllerApi extends Controller
 {
     public function getAllXray(){
-        $xrays = Xray::get();
+        $xrays = Xray::paginate(20);
         return response()->json([
                 'data'  => $xrays,
             ]);
@@ -37,7 +37,7 @@ class XrayControllerApi extends Controller
 
         $nearbyXrays = [];
 
-        $xrays = Xray::where('name', 'LIKE', "%$request->name%")->get();
+        $xrays = Xray::where('name', 'LIKE', $request->name.'%')->paginate(20);
 
         foreach ($xrays as $xray) {
             $latitudeFrom = $xray->latitude;
@@ -91,7 +91,7 @@ class XrayControllerApi extends Controller
     }
     
     public function show(Request $request){
-        $name_search = Xray::where('name','like','%' . $request->name . '%')->get();
+        $name_search = Xray::where('name','like','%' . $request->name . '%')->paginate(20);
         return response()->json([
             'data'  => $name_search,
             'status'=> true

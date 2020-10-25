@@ -11,10 +11,13 @@ use Illuminate\Support\Facades\Validator;
 class DoctorControllerApi extends Controller
 {
     public function getAllDoctor(){
+        
         $doctors = Doctor::get();
+       // dd($doctors);
         return response()->json([
                 'data'  => $doctors,
             ]);
+            
     }
     public function index(Request $request)
     {
@@ -39,7 +42,7 @@ class DoctorControllerApi extends Controller
 
         $nearbyDoctors = [];
 
-        $doctors = Doctor::where('name', 'LIKE', "%$request->name%")->get();
+        $doctors = Doctor::where('name', 'LIKE', $request->name.'%')->paginate(20);
 
         foreach ($doctors as $doctor) {
             $latitudeFrom = $doctor->latitude;
@@ -81,12 +84,18 @@ class DoctorControllerApi extends Controller
             'phone'=>'required',
             'specialtyName'=>'required',
             'photo'=> '',
+            'days'=>'required|array',
+            'hours'=>'required|array',
         ]);
         if($validator->fails()){
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
+        $workTime = ['days' => $request->days, 'hours' => $request->hours];
+		$data['work_times'] = json_encode($workTime);
         
         $doctors = Doctor::create($data);
+		$doctors['work_times'] = json_decode($doctors->work_times);
+     
     
         return response([
             'data' => $doctors,
@@ -94,12 +103,35 @@ class DoctorControllerApi extends Controller
     }
     
     public function show(Request $request){
-        $name_search = Doctor::where('name','like','%' . $request->name . '%')->get();
+        $name_search = Doctor::where('name','like','%' . $request->name . '%')->paginate(20);
         return response()->json([
             'data'  => $name_search,
             'status'=> true
         ]);
     }
     
-
+ public function deleteDoctor($latitude,$longitude){
+    $doctor = Doctor::where('latitude', $latitude)->where('longitude', $longitude)->delete();
+    if($doctor){
+        $data=[
+            'msg'=>'Success Delete Doctor'
+          ];
+    }
+    else{
+        $data=[
+            'msg'=>'Fail Not Exists Doctor'
+          ];
+    }
+    return response()->json($data);
+ }
+   public function updateDoctor($latitude,$longitude,Request $request){
+    $doctor =  Doctor::where('latitude', $latitude)->where('longitude',$longitude)->update($request->all());
+   
+    if($doctor){
+       $data1 = ['status' =>'Success Update Record'];
+    }else{
+        $data1=['status'=>'Failed Update Record'];
+    }
+    return response()->json($data1);
+    }
 }

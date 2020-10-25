@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class LabControllerApi extends Controller
 {
     public function getAllLab(){
-        $labs = Labs::get();
+        $labs = Labs::paginate(20);
         return response()->json([
                 'data'  => $labs,
             ]);
@@ -37,7 +37,7 @@ class LabControllerApi extends Controller
 
         $nearbyLabs = [];
 
-        $labs = Labs::where('name', 'LIKE', "%$request->name%")->get();
+        $labs = Labs::where('name', 'LIKE', $request->name.'%')->paginate(20);
 
         foreach ($labs as $lab) {
             $latitudeFrom = $lab->latitude;
@@ -91,7 +91,7 @@ class LabControllerApi extends Controller
     }
     
     public function show(Request $request){
-        $name_search = Labs::where('name','like','%' . $request->name . '%')->get();
+        $name_search = Labs::where('name','like','%' . $request->name . '%')->paginate(20);
         return response()->json([
             'data'  => $name_search,
             'status'=> true

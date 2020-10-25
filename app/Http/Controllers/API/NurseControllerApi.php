@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class NurseControllerApi extends Controller
 {
     public function getAllXnurse(){
-        $nurses = Nurse::get();
+        $nurses = Nurse::paginate(20);
         return response()->json([
                 'data'  => $nurses,
             ]);
@@ -37,7 +37,7 @@ class NurseControllerApi extends Controller
 
         $nearbyNurses = [];
 
-        $nurses = Nurse::where('name', 'LIKE', "%$request->name%")->get();
+        $nurses = Nurse::where('name', 'LIKE', $request->name.'%')->paginate(20);
 
         foreach ($nurses as $nurse) {
             $latitudeFrom = $nurse->latitude;
@@ -92,7 +92,7 @@ class NurseControllerApi extends Controller
     }
     
     public function show(Request $request){
-        $name_search = Nurse::where('name','like','%' . $request->name . '%')->get();
+        $name_search = Nurse::where('name','like','%' . $request->name . '%')->paginate(20);
         return response()->json([
             'data'  => $name_search,
             'status'=> true
