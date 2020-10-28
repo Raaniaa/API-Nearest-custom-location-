@@ -22,7 +22,9 @@ class CreateDoctorsTable extends Migration
             $table->string('longitude');
             $table->string('specialtyName');
             $table->string('photo')->nullable();
-      
+            $table->string('telephone')->nullable();
+            $table->string('fees')->nullable();
+            $table->string('duration')->nullable();
             $table->json('work_times')->nullable();
             $table->foreign('specialtyName')->references('specialtyName')->on('specialties')->onDelete('cascade');
             $table->timestamps();

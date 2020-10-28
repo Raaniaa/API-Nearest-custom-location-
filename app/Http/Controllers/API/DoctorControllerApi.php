@@ -1,6 +1,4 @@
 <?php
-
-
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
@@ -12,8 +10,8 @@ class DoctorControllerApi extends Controller
 {
     public function getAllDoctor(){
         
-        $doctors = Doctor::get();
-       // dd($doctors);
+        $doctors = Doctor::paginate(20);
+        //dd($doctors);
         return response()->json([
                 'data'  => $doctors,
             ]);
@@ -82,6 +80,9 @@ class DoctorControllerApi extends Controller
             'longitude' => 'required|max:255',
             'address'=>'required',
             'phone'=>'required',
+            'telephone'=>'required',
+            'fees'=>'required',
+            'duration'=>'',
             'specialtyName'=>'required',
             'photo'=> '',
             'days'=>'required|array',
@@ -133,5 +134,12 @@ class DoctorControllerApi extends Controller
         $data1=['status'=>'Failed Update Record'];
     }
     return response()->json($data1);
+    }
+    public function searchId($phone){
+        $doctor =  Doctor::where('phone', $phone)->get();
+        return response()->json([
+            'data'  => $doctor,
+            'status'=> true
+        ]);
     }
 }
