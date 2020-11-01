@@ -67,3 +67,4 @@ Route::post('/homecare','App\Http\Controllers\Api\HomecareControllerApi@Homecare
 Route::get('/homecares','App\Http\Controllers\Api\HomecareControllerApi@getAllhomecare');
 Route::get('/homecare/{phone}','App\Http\Controllers\Api\HomecareControllerApi@homecareDelete');
 Route::get('/homecare','App\Http\Controllers\Api\HomecareControllerApi@index');
+Route::get('/homecare{phone}','App\Http\Controllers\Api\HomecareControllerApi@searchphone');

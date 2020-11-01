@@ -70,7 +70,7 @@ private function getNearby($request)
 
         $nearbyHomecares = [];
 
-        $homecares = Homecare::where('name', 'LIKE', $request->name.'%')->paginate(20);
+        $homecares = Homecare::where('specialtyName', 'LIKE', $request->name.'%')->paginate(20);
 
         foreach ($homecares as $homecare) {
             $latitudeFrom = $homecare->latitude;
@@ -101,5 +101,19 @@ private function getNearby($request)
             return $nearbyHomecares;
         }
 }
+public function searchphone($phone){
+$homecare=Homecare::Where('phone',$phone)->get();
+if($homecare){
+    $data=[
+        'data'=> $homecare,
+        'msg'=>'Retrive Success'
+      ];
+}
+else{
+    $data=[
+        'msg'=>'Fail Not Exists Doctor'
+      ];
+}
+return response()->json($data);}
 
 }

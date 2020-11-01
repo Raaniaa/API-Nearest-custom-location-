@@ -12,6 +12,5 @@ class Homecare extends Model
     protected $fillable = ['name','address', 'latitude', 'photo','longitude','specialtyName','phone','homecare'];
     protected $hidden = ['created_at','updated_at'];
     protected $casts = [
-        'homecare' => 'boolean',
-    ];
+        'homecare' => 'boolean',];
 }
