@@ -61,3 +61,9 @@ Route::get('/nurse', 'App\Http\Controllers\Api\NurseControllerApi@index');
 
 //get banner image
 Route::get('/banner', 'App\Http\Controllers\Api\BannerControllerApi@getBanner');
+
+//Home care routes
+Route::post('/homecare','App\Http\Controllers\Api\HomecareControllerApi@HomecareStore');
+Route::get('/homecares','App\Http\Controllers\Api\HomecareControllerApi@getAllhomecare');
+Route::get('/homecare/{phone}','App\Http\Controllers\Api\HomecareControllerApi@homecareDelete');
+Route::get('/homecare','App\Http\Controllers\Api\HomecareControllerApi@index');
