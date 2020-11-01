@@ -101,19 +101,17 @@ private function getNearby($request)
             return $nearbyHomecares;
         }
 }
-public function searchphone($phone){
-$homecare=Homecare::Where('phone',$phone)->get();
-if($homecare){
-    $data=[
-        'data'=> $homecare,
-        'msg'=>'Retrive Success'
-      ];
-}
-else{
-    $data=[
-        'msg'=>'Fail Not Exists Doctor'
-      ];
-}
-return response()->json($data);}
-
+ public function searchphone(Request $request){
+    $homecare = Homecare::where('phone', 'LIKE', '%' . $request->phone . '%')->first();
+    if($homecare == true){
+        return response()->json([
+            'data' => $homecare,
+            'msg'   => 'success',
+        ]);
+    }
+    return response()->json([
+        'msg'   => 'faild',
+    ]);
+    
+ }
 }

@@ -127,9 +127,10 @@ class DoctorControllerApi extends Controller
  }
    public function updateDoctor($latitude,$longitude,Request $request){
     $doctor =  Doctor::where('latitude', $latitude)->where('longitude',$longitude)->update($request->all());
-   
-    if($doctor){
-       $data1 = ['status' =>'Success Update Record'];
+    $doctoru =  Doctor::where('latitude', $latitude)->where('longitude',$longitude)->get();
+    if($doctoru){
+       $data1 = [ 'data' => $doctoru,
+           'status' =>'Success Update Record'];
     }else{
         $data1=['status'=>'Failed Update Record'];
     }
