@@ -18,6 +18,7 @@ public function HomecareStore(Request $request){
             'specialtyName'=>'required',
             'photo'=> '',
             'homecare'=>'',
+			'duration'=>'required',
         ]);
         if($validator->fails()){
             return response(['error' => $validator->errors(), 'Validation Error']);

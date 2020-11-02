@@ -17,7 +17,7 @@ class CreateHomecaresTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
-            $table->string('phone');
+            $table->string('phone')->unique();
             $table->string('latitude');
             $table->string('longitude');
             $table->string('specialtyName');

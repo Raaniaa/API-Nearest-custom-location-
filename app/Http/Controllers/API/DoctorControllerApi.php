@@ -91,12 +91,15 @@ class DoctorControllerApi extends Controller
         if($validator->fails()){
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
-        $workTime = ['days' => $request->days, 'hours' => $request->hours];
-		$data['work_times'] = json_encode($workTime);
+     //   $workTime = ['days' => $request->days, 'hours' => $request->hours];
+     $days=json_encode($request->days);
+     $hours=json_encode( $request->hours);
+	//	$data['work_times'] = json_encode($workTime);
         
         $doctors = Doctor::create($data);
-		$doctors['work_times'] = json_decode($doctors->work_times);
-     
+		//$doctors['work_times'] = json_decode($doctors->work_times);
+        $doctors['days'] = json_decode($doctors->days);
+        $doctors['hours'] = json_decode($doctors->hours);
     
         return response([
             'data' => $doctors,

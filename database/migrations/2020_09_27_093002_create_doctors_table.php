@@ -25,7 +25,8 @@ class CreateDoctorsTable extends Migration
             $table->string('telephone')->nullable();
             $table->string('fees')->nullable();
             $table->string('duration')->nullable();
-            $table->json('work_times')->nullable();
+            $table->longText('days');
+            $table->longText('hours');
             $table->foreign('specialtyName')->references('specialtyName')->on('specialties')->onDelete('cascade');
             $table->timestamps();
         });
