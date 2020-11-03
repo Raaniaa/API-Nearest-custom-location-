@@ -10,8 +10,11 @@ class DoctorControllerApi extends Controller
 {
     public function getAllDoctor(){
         
-        $doctors = Doctor::paginate(20);
-        //dd($doctors);
+        $doctors = Doctor::get();
+      //  $days=json_decode($doctors->days);
+       // $hours=json_decode($doctors->hours);
+        //$doctors['days'] = json_decode($doctors);
+       // $doctor['days'] =json_encode('days');
         return response()->json([
                 'data'  => $doctors,
             ]);
