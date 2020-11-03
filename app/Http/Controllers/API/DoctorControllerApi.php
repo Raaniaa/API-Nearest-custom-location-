@@ -112,9 +112,9 @@ class DoctorControllerApi extends Controller
     }
     
     public function show(Request $request){
-        $homecare = Doctor::where('name', $request->name )->count();
+        $homecare = Doctor::where('name', 'LIKE', '%' . $request->name . '%')->count();
         if($homecare ){
-            $homecare1 = Doctor::where('name', $request->name )->get();
+            $homecare1 = Doctor::where('name', 'LIKE', '%' . $request->name . '%')->get();
             return response()->json([
                 'data' => $homecare1,
                 'msg'   => 'success',

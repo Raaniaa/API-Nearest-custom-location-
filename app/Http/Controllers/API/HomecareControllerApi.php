@@ -103,8 +103,9 @@ private function getNearby($request)
         }
 }
  public function searchphone(Request $request){
-    $homecare = Homecare::where('phone', 'LIKE', '%' . $request->phone . '%')->get();
+    $homecare = Homecare::where('phone', 'LIKE', '%' . $request->phone . '%')->count();
     if($homecare == true){
+        $homecare1=Homecare::where('phone','LIKE','%' .$request->phone . '%')->get();
         return response()->json([
             'data' => $homecare,
             'msg'   => 'success',
