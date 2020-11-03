@@ -14,7 +14,7 @@ class DoctorControllerApi extends Controller
       //  $days=json_decode($doctors->days);
        // $hours=json_decode($doctors->hours);
         //$doctors['days'] = json_decode($doctors);
-       // $doctor['days'] =json_encode('days');
+      //  $doctor['days'] =json_encode('days');
         return response()->json([
                 'data'  => $doctors,
             ]);
@@ -95,16 +95,16 @@ class DoctorControllerApi extends Controller
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
      //   $workTime = ['days' => $request->days, 'hours' => $request->hours];
-     $days=$request->days;
-     $hours=$request->hours;
-     $data['days']=json_encode($days);
-     $data['hours']=json_encode($hours);
+     $days= $request->days;
+     $hours= $request->hours;
+     //$data['days']=json_encode($days);
+   //  $data['hours']=json_encode($hours);
 	//	$data['work_times'] = json_encode($workTime);
         
         $doctors = Doctor::create($data);
 	    //$doctors['work_times'] = json_decode($doctors->work_times);
-        $doctors['days'] = json_decode($doctors->days);
-        $doctors['hours'] = json_decode($doctors->hours);
+     //   $doctors['days'] = json_decode($doctors->days);
+       // $doctors['hours'] = json_decode($doctors->hours);
     
         return response([
             'data' => $doctors,
@@ -112,11 +112,19 @@ class DoctorControllerApi extends Controller
     }
     
     public function show(Request $request){
-        $name_search = Doctor::where('name','like','%' . $request->name . '%')->paginate(20);
+        $homecare = Doctor::where('name', $request->name )->count();
+        if($homecare ){
+            $homecare1 = Doctor::where('name', $request->name )->get();
+            return response()->json([
+                'data' => $homecare1,
+                'msg'   => 'success',
+            ]);
+        }
         return response()->json([
-            'data'  => $name_search,
-            'status'=> true
+            'msg'   => 'faild',
         ]);
+        
+       
     }
     
  public function deleteDoctor($latitude,$longitude){
@@ -145,15 +153,16 @@ class DoctorControllerApi extends Controller
     return response()->json($data1);
     }
     public function searchId(Request $request){
-        $doctor = Doctor::where('phone', 'LIKE', '%' . $request->phone . '%')->first();
+        $doctor = Doctor::where('phone', 'LIKE', '%' . $request->phone . '%')->count();
         if($doctor == true){
+            $doctor = Doctor::where('phone', 'LIKE', '%' . $request->phone . '%')->get();
             return response()->json([
                 'data' => $doctor,
                 'msg'   => 'success',
             ]);
         }
         return response()->json([
-            'msg'   => 'faild',
+            'msg'   => 'faild not exist',
         ]);
     }
 }
