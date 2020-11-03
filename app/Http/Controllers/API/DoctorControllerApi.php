@@ -141,11 +141,16 @@ class DoctorControllerApi extends Controller
     }
     return response()->json($data1);
     }
-    public function searchId($phone){
-        $doctor =  Doctor::where('phone', $phone)->get();
+    public function searchId(Request $request){
+        $doctor = Doctor::where('phone', 'LIKE', '%' . $request->phone . '%')->first();
+        if($doctor == true){
+            return response()->json([
+                'data' => $doctor,
+                'msg'   => 'success',
+            ]);
+        }
         return response()->json([
-            'data'  => $doctor,
-            'status'=> true
+            'msg'   => 'faild',
         ]);
     }
 }
