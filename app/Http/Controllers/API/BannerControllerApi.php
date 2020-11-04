@@ -10,10 +10,15 @@ use Illuminate\Support\Facades\Validator;
 class BannerControllerApi extends Controller
 {
     public function getBanner(){
-        $banners = Banner::get();
-        return response()->json([
-                'data'  => $banners,
-            ]);
+        $banners = Banner::count();
+        if ($banners){
+            $banner = Banner::paginate(20);
+            return response([
+                'data' => $banner ,
+                'message' => 'success'], 200);
+            }else{
+                return response(['message' => 'failed']);
+            }
     }
 
 }

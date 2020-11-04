@@ -10,10 +10,15 @@ use Illuminate\Support\Facades\Validator;
 class XrayControllerApi extends Controller
 {
     public function getAllXray(){
-        $xrays = Xray::paginate(20);
-        return response()->json([
-                'data'  => $xrays,
-            ]);
+        $xrays = Xray::count();
+        if ($xrays){
+            $xray = Xray::paginate(20);
+            return response([
+                'data' => $xray ,
+                'message' => 'success'], 200);
+            }else{
+                return response(['message' => 'failed']);
+            }
     }
     public function index(Request $request)
     {

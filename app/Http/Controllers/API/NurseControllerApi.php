@@ -10,10 +10,16 @@ use Illuminate\Support\Facades\Validator;
 class NurseControllerApi extends Controller
 {
     public function getAllXnurse(){
-        $nurses = Nurse::paginate(20);
-        return response()->json([
-                'data'  => $nurses,
-            ]);
+        $nurses = Nurse::count();
+        if ($nurses){
+            $nurse = Nurse::paginate(20);
+            return response([
+                'data' => $nurse ,
+                'message' => 'success'], 200);
+            }else{
+                return response(['message' => 'failed']);
+            }
+      
     }
     public function index(Request $request)
     {

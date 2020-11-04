@@ -33,11 +33,17 @@ public function HomecareStore(Request $request){
     }
 public function getAllhomecare() 
     {
-        $homecare = Homecare::paginate(20);
-        //dd($doctors);
-        return response()->json([
-                'data'  => $homecare,
-            ]);
+        $homecare = Homecare::count();
+        if ($homecare){
+            $homecares = Homecare::paginate(20);
+            return response([
+                'data' => $homecares ,
+                'message' => 'success'], 200);
+            }else{
+                return response(['message' => 'failed']);
+            }
+
+
     }
 public function homecareDelete($phone)
  {

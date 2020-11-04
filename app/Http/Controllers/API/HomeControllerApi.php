@@ -10,10 +10,15 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\PharmacyResource;
 class HomeControllerApi extends Controller
 {  public function getAllPharmacy(){
-    $Pharmacies = Pharmacy::paginate(10);
-    return response()->json([
-            'data'  => $Pharmacies,
-        ]);
+    $Pharmacies = Pharmacy::count();
+        if ($Pharmacies){
+            $Pharmacy = Pharmacy::paginate(20);
+            return response([
+                'data' => $Pharmacy ,
+                'message' => 'success'], 200);
+            }else{
+                return response(['message' => 'failed']);
+            }
 }
     public function index(Request $request)
     {

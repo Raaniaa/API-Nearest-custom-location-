@@ -10,10 +10,15 @@ use Illuminate\Support\Facades\Validator;
 class LabControllerApi extends Controller
 {
     public function getAllLab(){
-        $labs = Labs::paginate(20);
-        return response()->json([
-                'data'  => $labs,
-            ]);
+        $labs = Labs::count();
+         if ($labs){
+                $lab = Labs::paginate(20);
+                return response([
+                    'data' => $lab ,
+                    'message' => 'success'], 200);
+                }else{
+                    return response(['message' => 'failed']);
+                }
     }
     public function index(Request $request)
     {

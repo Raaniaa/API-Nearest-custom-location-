@@ -9,15 +9,19 @@ use Illuminate\Support\Facades\Validator;
 class DoctorControllerApi extends Controller
 {
     public function getAllDoctor(){
-        
-        $doctors = Doctor::get();
+         $doctors = Doctor::count();
       //  $days=json_decode($doctors->days);
        // $hours=json_decode($doctors->hours);
         //$doctors['days'] = json_decode($doctors);
       //  $doctor['days'] =json_encode('days');
-        return response()->json([
-                'data'  => $doctors,
-            ]);
+      if ($doctors){
+        $doctor = Doctor::paginate(20);
+        return response([
+            'data' => $doctor ,
+            'message' => 'success'], 200);
+        }else{
+            return response(['message' => 'failed']);
+        }
             
     }
     public function index(Request $request)

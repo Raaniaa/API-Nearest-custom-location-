@@ -11,10 +11,15 @@ use Illuminate\Support\Facades\Validator;
 class SpecialtyControllerApi extends Controller
 { 
      public function getAllSpecialty(){
-    $specialties = Specialty::get();
-    return response()->json([
-            'data'  => $specialties,
-        ]);
+    $specialties = Specialty::count();
+    if ($specialties){
+        $specialty = Specialty::paginate(20);
+        return response([
+            'data' => $specialty ,
+            'message' => 'success'], 200);
+        }else{
+            return response(['message' => 'failed']);
+        }
 }
     public function index(Request $request)
     {
