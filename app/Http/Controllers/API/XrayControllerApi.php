@@ -18,9 +18,14 @@ class XrayControllerApi extends Controller
     public function index(Request $request)
     {
         $xrays = $this->getNearby($request);
-        return response([
-            'data' => $xrays ,
-            'message' => 'Retrieved successfully'], 200);
+        if ($xrays){
+            return response([
+                'data' => $xrays ,
+                'message' => 'success'], 200);
+            }else{
+                return response(['message' => 'failed']);
+            }
+        
     }
 
 

@@ -18,9 +18,14 @@ class NurseControllerApi extends Controller
     public function index(Request $request)
     {
         $nurses = $this->getNearby($request);
-        return response([
-            'data' => $nurses ,
-            'message' => 'Retrieved successfully'], 200);
+        if ($nurses){
+            return response([
+                'data' => $nurses ,
+                'message' => 'success'], 200);
+            }else{
+                return response(['message' => 'failed']);
+            }
+    
     }
 
 

@@ -18,9 +18,14 @@ class LabControllerApi extends Controller
     public function index(Request $request)
     {
         $labs = $this->getNearby($request);
-        return response([
-            'data' => $labs ,
-            'message' => 'Retrieved successfully'], 200);
+        if ($labs){
+            return response([
+                'data' => $labs ,
+                'message' => ' success'], 200);
+            }else{
+                return response(['message' => 'failed']);
+            }
+        
     }
 
 

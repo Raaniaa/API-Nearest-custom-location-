@@ -19,9 +19,14 @@ class SpecialtyControllerApi extends Controller
     public function index(Request $request)
     {
         $specialties = $this->getNearby($request);
-        return response([
-            'data' => $specialties ,
-            'message' => 'Retrieved successfully'], 200);
+        if ($specialties){
+            return response([
+                'data' => $specialties ,
+                'message' => 'success'], 200);
+            }else{
+                return response(['message' => 'failed']);
+            }
+       
     }
 
 

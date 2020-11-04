@@ -18,9 +18,14 @@ class HomeControllerApi extends Controller
     public function index(Request $request)
     {
         $pharmacies = $this->getNearby($request);
-        return response([
-            'data' => $pharmacies ,
-            'message' => 'Retrieved successfully'], 200);
+        if ($pharmacies){
+            return response([
+                'data' => $pharmacies ,
+                'message' => 'success'], 200);
+            }else{
+                return response(['message' => 'failed']);
+            }
+        
     }
 
 

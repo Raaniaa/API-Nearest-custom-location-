@@ -21,11 +21,15 @@ class DoctorControllerApi extends Controller
             
     }
     public function index(Request $request)
-    {
+    {   
         $doctors = $this->getNearby($request);
+        if ($doctors){
         return response([
             'data' => $doctors ,
-            'message' => 'Retrieved successfully'], 200);
+            'message' => 'success'], 200);
+        }else{
+            return response(['message' => 'failed']);
+        }
     }
 
 

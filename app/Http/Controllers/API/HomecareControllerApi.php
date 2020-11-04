@@ -58,9 +58,13 @@ public function homecareDelete($phone)
 public function index(Request $request)
      {
         $homecares = $this->getNearby($request);
-        return response([
-            'data' => $homecares ,
-            'message' => 'Retrieved successfully'], 200);
+            if ($homecares){
+                return response([
+                    'data' => $homecares ,
+                    'message' => 'success'], 200);
+                }else{
+                    return response(['message' => 'failed']);
+                }
      }
 private function getNearby($request)
     {
