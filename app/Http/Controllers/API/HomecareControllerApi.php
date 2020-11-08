@@ -18,7 +18,8 @@ public function HomecareStore(Request $request){
             'specialtyName'=>'required',
             'photo'=> '',
             'homecare'=>'',
-			'duration'=>'required',
+            'discription' => 'required'
+			//'duration'=>'required',
         ]);
         if($validator->fails()){
             return response(['error' => $validator->errors(), 'Validation Error']);
@@ -35,7 +36,7 @@ public function getAllhomecare()
     {
         $homecare = Homecare::count();
         if ($homecare){
-            $homecares = Homecare::paginate(20);
+            $homecares = Homecare::simplePaginate(20);
             return response([
                 'data' => $homecares ,
                 'message' => 'success'], 200);

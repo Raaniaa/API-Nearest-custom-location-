@@ -18,6 +18,7 @@ class CreateDoctorsTable extends Migration
             $table->string('name', 100);
             $table->string('address', 300);
             $table->string('phone')->unquie();
+            $tabel->string('description');
             $table->string('latitude');
             $table->string('longitude');
             $table->string('specialtyName');

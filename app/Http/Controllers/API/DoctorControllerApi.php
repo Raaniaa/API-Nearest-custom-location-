@@ -98,6 +98,7 @@ class DoctorControllerApi extends Controller
             'photo'=> '',
             'days'=>'required|array',
             'hours'=>'required|array',
+            'description'=>'required',
         ]);
         if($validator->fails()){
             return response(['error' => $validator->errors(), 'Validation Error']);
